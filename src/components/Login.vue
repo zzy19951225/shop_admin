@@ -6,7 +6,7 @@
     <el-input v-model="form.username" placeholder="请输入用户名" ></el-input>
   </el-form-item>
    <el-form-item label="密码"  prop="password" >
-    <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+    <el-input v-model="form.password" placeholder="请输入密码" type="password" @keyup.native.13="login"></el-input>
   </el-form-item>
 
   <el-form-item>
@@ -55,6 +55,10 @@ export default {
             console.log(res.data)
             if (res.data.meta.status === 200) {
               this.$message.success('登录成功')
+              // 存储token
+              localStorage.setItem('token', res.data.data.taken)
+              // 跳转到Home组件
+              this.$router.push('/home')
             } else {
               this.$message.error(res.data.meta.msg)
             }
